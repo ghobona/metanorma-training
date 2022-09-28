@@ -14,8 +14,8 @@ jobs:
           path: main
       - name: Generate document
         run: |
+          cd main
           metanorma compile --agree-to-terms -t ogc -x xml,html,doc document.adoc
-          cp document.html ../../../../main/document.html
           git config --global user.name 'example'
           git config --global user.email 'example@example.com'
           git add document.html
