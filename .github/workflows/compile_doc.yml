@@ -1,23 +1,26 @@
 name: compile_doc
 on:
-  issues:
-    types: opened
+  pull_request:
+    types:
+      - closed
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    container: metanorma/metanorma:latest
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
-        with:
-          path: main
-      - name: Generate document
-        run: |
-          metanorma compile --agree-to-terms -t ogc -x xml,html,doc document.adoc
-          cp document.html ../../../../main/document.html
-          git config --global user.name 'example'
-          git config --global user.email 'example@example.com'
-          git add document.html
-          git commit -am "Compilation of HTML documents"
-          git push
+    if_merged:
+      if: github.event.pull_request.merged == true
+      runs-on: ubuntu-latest
+      container: metanorma/metanorma:latest
+      steps:
+        - name: Checkout repo
+          uses: actions/checkout@v3
+          with:
+            path: main
+        - name: Generate document
+          run: |
+            metanorma compile --agree-to-terms -t ogc -x xml,html,doc document.adoc
+            cp document.html ../../../../main/document.html
+            git config --global user.name 'example'
+            git config --global user.email 'example@example.com'
+            git add document.html
+            git commit -am "Compilation of HTML documents"
+            git push
