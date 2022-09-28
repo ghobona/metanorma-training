@@ -1,4 +1,4 @@
-= Metanorma Training Workshop Example 1
+= Metanorma Training Workshop Example 2
 :doctype: standard
 :docsubtype: implementation
 :edition: 1.0.0
